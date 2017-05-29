@@ -1,11 +1,14 @@
 'use strict';
-let http = require('http');
-const PORT = 3000;
+let express = require('express');
+let app = express();
+let url = require('url');
 
-let server = http.createServer(function(req, res){
-	res.end('Testing Connection');
+const port = 3000;
+
+app.get('/', (req, res) =>{
+	res.send('Testing testing express...');
 });
 
-server.listen(PORT, () =>{
-	console.log('Server is online');
+app.listen(port, () =>{
+	console.log('Server is live');
 });
