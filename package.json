@@ -1,0 +1,20 @@
+{
+  "name": "contact_app",
+  "version": "1.0.0",
+  "description": "Simple contact app built with NodeJs and Express framework",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@c0d1ngd0j0:C0D1NGD0J0/nodeJs_Contact_App.git"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "contact_app"
+  ],
+  "author": "C0D1NGD0J0",
+  "license": "ISC"
+}
