@@ -1,6 +1,10 @@
 'use strict';
 let router = require('express').Router();
 
+router.get('/', (req, res) =>{
+	res.render('pages/index', {title: 'Contactlist App'});
+});
+
 router.get('/api/member', (req, res) =>{
 	res.send('Member index page');
 });
