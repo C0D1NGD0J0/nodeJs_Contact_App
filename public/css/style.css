@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css?family=Dosis:400,700|Raleway:300,400,700');
+
+/*===============
+GENERAL
+===============*/
+html{
+	height: 100%;
+}
+
+body{
+	height: 100%;
+	font-size: 16px;
+	font-weight: 400; 
+	color: #191919;
+	line-height: 27px;
+	padding-top: 80px;
+	margin-bottom: 55px;
+	letter-spacing: 0.5px;
+	text-rendering: optimizeLegibility;
+	font-family: 'Raleway', sans-serif;
+}
+
+p{
+	margin-top: 0px;
+	font-weight: 400;
+	margin-bottom: 20px;
+}
