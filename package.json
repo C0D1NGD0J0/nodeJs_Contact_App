@@ -2,7 +2,8 @@
   "name": "contact_app",
   "version": "1.0.0",
   "description": "Simple contact app built with NodeJs and Express framework",
-  "main": "app.js",
+  // "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

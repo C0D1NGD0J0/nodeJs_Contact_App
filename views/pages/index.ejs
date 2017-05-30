@@ -15,7 +15,7 @@
 	<% include ../partials/navbar %>
 
 	<header id="header" class="header">
-		<% include ../partials/header %>
+		<%# include ../partials/header %>
 	</header><!-- /header -->
 
 	<div class="container">
@@ -24,9 +24,15 @@
 	    <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
 	  </div>
 	</div><!-- /.container -->
+	
+	<% include ../partials/table %>
 
 	<footer>
-		<% include ../partials/footer %>
+		<%# include ../partials/footer %>
 	</footer>
+	
+	<script type="text/javascript" src="./js/jquery.min.js"></script>
+	<script type="text/javascript" src="./js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="./js/main.js"></script>
 </body>
 </html>
