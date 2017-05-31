@@ -1,9 +1,10 @@
 'use strict';
-let router = require('express').Router();
-let {db} = require('../db/index');
-let {User} = require('../model/user');
-let {Contact} = require('../model/contact');
-let {ObjectID} = require('mongodb');
+const router = require('express').Router();
+const {db} = require('../db/index');
+const {User} = require('../model/user');
+const {Contact} = require('../model/contact');
+const {ObjectID} = require('mongodb');
+const _ = require('lodash');
 
 router.get('/', (req, res) =>{
 	res.render('pages/index', {title: 'Contactlist App'});
@@ -46,6 +47,24 @@ router.post('/contacts', (req, res) =>{
 	}, (e) => {
 		res.status(400).send(e);
 	});
+});
+
+router.patch('/contacts/:id', (req, res) => {
+	let id = req.params.id;
+	let body = _.pick(req.body, ['firstName', 'lastName', 'email', 'phone']);
+
+	if(!ObjectID.isValid(id)){
+		return res.status(404).send();
+	}
+
+	Contact.findByIdAndUpdate(id, {$set: body}, {new: true}).then((contact) => {
+		if(!contact){
+			return res.status(400).send();
+		}
+		res.send({contact});
+	}).catch((e) => {
+		res.status(400).send();
+	})
 });
 
 router.delete('/contacts/:id', (req, res) => {
