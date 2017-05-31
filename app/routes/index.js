@@ -1,35 +1,20 @@
 'use strict';
 let router = require('express').Router();
+let {db} = require('./app/db/index');
+let {UserModel} = require('./app/model/user');
+let {ContactModel} = require('./app/model/contact');
 
 router.get('/', (req, res) =>{
 	res.render('pages/index', {title: 'Contactlist App'});
 });
 
-router.get('/contact', (req, res) =>{
-	res.send(data);
-});
-
-router.get('/contact/:id', (req, res) =>{
-	const data = {
-		contactId: 1,
-		firstName: 'John',
-		lastName: 'Micheal',
-		email: 'john@micheal.com',
-		phone: '987234133'
-	}
-	res.send(data);
-});
-
-router.post('/contact', (req, res) =>{
-	res.send(req.body);
-});
-
-router.put('/contact/:id', (req, res) =>{
-	res.send(req.body);
-});
-
-router.delete('/contact/:id', (req, res) =>{
-	res.send({message: 'Record deleted.'});
+router.post('/contacts', (req, res) =>{
+	let contact = new ContactModel({
+		firstName: 'Elizabeth',
+		lastName: 'Dolittle',
+		email: 'elizabeth@example.com',
+		phone: '08032145589'
+	});
 });
 
 router.get('*', (req, res) =>{
