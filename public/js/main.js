@@ -1,7 +1,7 @@
 function get(){
 	$.ajax({
 		type: 'GET',
-		url: 'http://localhost:3000/contact',
+		url: 'http://localhost:3000/contacts',
 		dataType: 'json'
 	})
 	.done((data) =>{
@@ -21,7 +21,7 @@ function get(){
 function post(){
 	$.ajax({
 		type: 'POST',
-		url: 'http://localhost:3000/contact',
+		url: 'http://localhost:3000/contacts',
 		crossDomain: true,
 		contentType: 'application/json; charset=utf',
 		dataType: 'json',
@@ -49,7 +49,7 @@ function post(){
 function put(){
 	$.ajax({
 		type: 'POST',
-		url: 'http://localhost:3000/contact/2',
+		url: 'http://localhost:3000/contacts/1',
 		crossDomain: true,
 		contentType: 'application/json; charset=utf',
 		dataType: 'json',
@@ -77,7 +77,7 @@ function put(){
 function del(){
 	$.ajax({
 		type: 'DELETE',
-		url: 'http://localhost:3000/contact/2',
+		url: 'http://localhost:3000/contacts/1',
 		dataType: 'json',
 	})
 	.done((data) =>{
