@@ -5,9 +5,6 @@ let app = express();
 let morgan = require('morgan'); //logs all web traffic to the app
 let {router} = require('./app/routes');
 let bodyParser = require('body-parser');
-// let {db} = require('./app/db/index');
-// let {UserModel} = require('./app/model/user');
-// let {ContactModel} = require('./app/model/contact');
 
 const port = (process.env.PORT || 3000);
 

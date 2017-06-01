@@ -1,14 +1,16 @@
 'use strict';
 let mongoose = require('mongoose');
 let validator = require('validator');
+const jwt = require('jsonwebtoken');
 
-let User = mongoose.model('User', {
+let UserSchema = new mongoose.Schema({
 	email: {
 		type: String,
 		required: true,
 		trim: true,
 		minlength: 6,
 		unique: true,
+		isAsync: false,
 		validate: {
 			validator: (value) => {
 				return validator.isEmail(value)
@@ -16,11 +18,23 @@ let User = mongoose.model('User', {
 			message: '{VALUE} is not a valid email'
 		}
 	},
+	
+	username: {
+		type: String,
+		unique: true,
+		minlength: 5,
+		maxlength: 10,
+		trim: true,
+		required: true
+	},
+
 	password: {
 		type: String,
 		minlength: 6,
-		required: true
+		required: true,
+		trim: true
 	},
+
 	tokens:[{
 		access: {
 			type: String,
@@ -32,5 +46,19 @@ let User = mongoose.model('User', {
 		}
 	}]
 });
+
+UserSchema.methods.generateAuthToken = function() {
+	let user = this;
+	let access = 'auth';
+	let token = jwt.sign({_id: user._id.toHexString(), access}, 'abcdef').toString();
+
+	user.tokens.push({access, token});
+	
+	return user.save().then(() => {
+		return token;
+	});
+}
+
+let User = mongoose.model('User', UserSchema);
 
 module.exports = {User};

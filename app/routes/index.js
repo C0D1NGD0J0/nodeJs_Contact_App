@@ -1,10 +1,10 @@
 'use strict';
-const router = require('express').Router();
-const {db} = require('../db/index');
-const {User} = require('../model/user');
-const {Contact} = require('../model/contact');
+let router = require('express').Router();
+let {mongoose} = require('../db/index');
+let {User} = require('../model/user');
+let {Contact} = require('../model/contact');
 const {ObjectID} = require('mongodb');
-const _ = require('lodash');
+let _ = require('lodash');
 
 router.get('/', (req, res) =>{
 	res.render('pages/index', {title: 'Contactlist App'});
@@ -35,12 +35,8 @@ router.get('/contacts/:id', (req, res) => {
 });
 
 router.post('/contacts', (req, res) =>{
-	let contact = new Contact({
-		firstName: 'Elizabeth',
-		lastName: 'Dolittle',
-		email: 'elizabeth@example.com',
-		phone: '08032145589'
-	});
+	let body = _.pick(req.body, ['firstName', 'lastName', 'email', 'phone']);
+	let contact = new Contact(body);
 
 	contact.save().then((contact) => {
 		res.send(contact);
@@ -82,9 +78,24 @@ router.delete('/contacts/:id', (req, res) => {
 	});
 });
 
+/* ===========================
+USER ROUTES
+============================*/
+router.post('/users', (req, res) => {
+	let body = _.pick(req.body, ['email', 'password', 'username']);
+	let user = new User(body);
+
+	user.save().then(() => {
+		user.generateAuthToken();
+	}).then((token) => {
+		res.header('x-auth', token).send(user)
+	}).catch((e) => {
+		res.status(400).send(e);
+	});
+});
+
 router.get('*', (req, res) =>{
 	res.status(404).send('Page not found, enter a valid url.');
 });
-
 
 module.exports = {router};
