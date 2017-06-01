@@ -7,7 +7,7 @@ function get(){
 	.done((data) =>{
 		console.log('GET response:', JSON.stringify(data, '', 2));
 
-		$('#dataContactId').html(data.contactId);
+		$('#dataContactId').html(data.id);
 		$('#dataF_Name').html(data.firstName);
 		$('#dataL_Name').html(data.lastName);
 		$('#dataEmail').html(data.email);
