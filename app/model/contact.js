@@ -1,5 +1,6 @@
 'use strict';
 let mongoose = require('mongoose');
+let validator = require('validator');
 
 let Contact = mongoose.model('Contact', {
 	firstName: {
@@ -24,7 +25,13 @@ let Contact = mongoose.model('Contact', {
 		trim: true,
 		maxlength: [15, 'The `{VALUE}` exceeds the max allowed length of `{MAXLENGTH}`'],
 		minlength: [8, 'The number `{VALUE}` is below the min allowed length of `{MAXLENGTH}`'],
-		unique: true
+		unique: true,
+		validate: {
+			validator: (value) => {
+				return validator.Numeric(value)
+			},
+			message: '{VALUE} is not a valid phone number'
+		}
 	}
 });
 
