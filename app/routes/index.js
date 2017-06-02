@@ -1,8 +1,9 @@
 'use strict';
 let router = require('express').Router();
 let {mongoose} = require('../db/index');
-let {User} = require('../model/user');
-let {Contact} = require('../model/contact');
+let {User} = require('../models/user');
+let {Contact} = require('../models/contact');
+let {auth} = require('../config/auth');
 const {ObjectID} = require('mongodb');
 let _ = require('lodash');
 
@@ -86,12 +87,18 @@ router.post('/users', (req, res) => {
 	let user = new User(body);
 
 	user.save().then(() => {
-		user.generateAuthToken();
-	}).then((token) => {
-		res.header('x-auth', token).send(user)
-	}).catch((e) => {
-		res.status(400).send(e);
-	});
+		return user.generateAuthToken();
+	})
+	.then((token) => {
+		res.header('x-auth', token).send(user);
+	})
+	.catch((e) => {
+		res.status(401).send(e);
+	})
+});
+
+router.get('/users/me', auth, (req, res) => {
+	res.send(req.user);
 });
 
 router.get('*', (req, res) =>{
