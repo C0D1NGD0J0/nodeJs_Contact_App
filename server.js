@@ -5,8 +5,8 @@ let app = express();
 let morgan = require('morgan'); //logs all web traffic to the app
 let {router} = require('./app/routes');
 let bodyParser = require('body-parser');
-
 const port = (process.env.PORT || 3000);
+
 
 app.set('view engine', 'ejs'); //set view engine to render dynamic content using EJS
 app.use(express.static(__dirname + '/public')); // serves static files e.g css/js/images
