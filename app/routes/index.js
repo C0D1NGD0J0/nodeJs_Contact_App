@@ -26,6 +26,8 @@ USER ROUTES
 ============================*/
 router.post('/users', userCntrl.create);
 
+router.post('/users/login', userCntrl.login);
+
 router.get('/users/me', auth, (req, res) => {
 	res.send(req.user);
 });
