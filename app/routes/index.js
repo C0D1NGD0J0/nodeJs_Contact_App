@@ -26,11 +26,11 @@ USER ROUTES
 ============================*/
 router.post('/users', userCntrl.create);
 
+router.get('/users/me', auth, userCntrl.show);
+
 router.post('/users/login', userCntrl.login);
 
-router.get('/users/me', auth, (req, res) => {
-	res.send(req.user);
-});
+router.delete('/users/me/token', auth, userCntrl.delete);
 
 router.get('*', (req, res) =>{
 	res.status(404).send('Page not found, enter a valid url.');

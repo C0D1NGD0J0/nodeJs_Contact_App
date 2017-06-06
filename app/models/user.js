@@ -52,7 +52,7 @@ let UserSchema = new mongoose.Schema({
 UserSchema.methods.toJSON = function() {
 	let user = this;
 	let userObject = user.toObject();
-	return _.pick(userObject, ['email', 'username']);
+	return _.pick(userObject, ['id','email', 'username']);
 }
 
 UserSchema.methods.generateAuthToken = function() {
@@ -66,6 +66,16 @@ UserSchema.methods.generateAuthToken = function() {
 		return token;
 	});
 }
+
+UserSchema.methods.removeToken = function(token) {
+	let user = this;
+
+	return user.update({
+		$pull:{
+			tokens: {token}
+		}
+	});
+};
 
 UserSchema.statics.findByToken = function(token) {
 	let User = this;

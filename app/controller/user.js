@@ -10,13 +10,15 @@ let userCntrl = {
 
 		user.save().then(() => {
 			return user.generateAuthToken();
-		})
-		.then((token) => {
+		}).then((token) => {
 			res.header('x-auth', token).send(user);
-		})
-		.catch((e) => {
+		}).catch((e) => {
 			res.status(401).send(e);
-		})
+		});
+	},
+
+	show: (req, res) => {
+		res.send(req.user);
 	},
 
 	login: (req, res) => {
@@ -27,6 +29,14 @@ let userCntrl = {
 			});
 		}).catch((e) => {
 			res.status(400).send(e);
+		});
+	},
+
+	delete: (req, res) => {
+		req.user.removeToken(req.token).then(() => {
+			res.status(200).send();
+		}, () => {
+			res.status(400).send();
 		});
 	}
 }
