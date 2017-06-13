@@ -11,15 +11,15 @@ router.get('/', (req, res) =>{
 	res.render('pages/index', {title: 'Contactlist App'});
 });
 
-router.get('/contacts', contactCntrl.index);
+router.get('/contacts', auth, contactCntrl.index);
 
-router.get('/contacts/:id', contactCntrl.show);
+router.get('/contacts/:id', auth, contactCntrl.show);
 
-router.post('/contacts', contactCntrl.create);
+router.post('/contacts', auth, contactCntrl.create);
 
-router.patch('/contacts/:id', contactCntrl.update);
+router.patch('/contacts/:id', auth, contactCntrl.update);
 
-router.delete('/contacts/:id', contactCntrl.delete);
+router.delete('/contacts/:id', auth, contactCntrl.delete);
 
 /* ===========================
 USER ROUTES

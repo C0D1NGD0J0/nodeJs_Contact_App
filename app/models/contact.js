@@ -2,7 +2,7 @@
 let mongoose = require('mongoose');
 let validator = require('validator');
 
-let Contact = mongoose.model('Contact', {
+let ContactSchema = new mongoose.Schema({
 	firstName: {
 		type: String,
 		required: true,
@@ -26,7 +26,13 @@ let Contact = mongoose.model('Contact', {
 		maxlength: [15, 'The `{VALUE}` exceeds the max allowed length of `{MAXLENGTH}`'],
 		minlength: [8, 'The number `{VALUE}` is below the min allowed length of `{MAXLENGTH}`'],
 		unique: true
+	},
+	_creator: {
+		require: true,
+		type: mongoose.Schema.Types.ObjectId
 	}
 });
 
-module.exports = {Contact};
+let Contact = mongoose.model('Contact', ContactSchema);
+
+module.exports = Contact;

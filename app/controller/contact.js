@@ -1,11 +1,11 @@
 'use strict';
-const ContactModel = require('../models/contact');
+const Contact = require('../models/contact');
 const {ObjectID} = require('mongodb');
 let _ = require('lodash');
 
 let contactCntrl = {
 	index: (req, res) => {
-		ContactModel.find().then((contacts) => {
+		Contact.find({_creator: req.user._id}).then((contacts) => {
 			res.send({contacts});
 		}, (e) => {
 			res.status(400).send(e);
@@ -18,7 +18,7 @@ let contactCntrl = {
 			return res.status(404).send();
 		}
 
-		ContactModel.findById(id).then((contact) => {
+		Contact.findOne({_id: id, _creator: req.user._id}).then((contact) => {
 			if(!contact){
 				return res.status(404).send();
 			}
@@ -29,8 +29,13 @@ let contactCntrl = {
 	},
 
 	create: (req, res) =>{
-		let body = _.pick(req.body, ['firstName', 'lastName', 'email', 'phone']);
-		let contact = new ContactModel(body);
+		let contact = new Contact({
+			firstName: req.body.firstName,
+			lastName: req.body.lastName,
+			email: req.body.email,
+			phone: req.body.phone,
+			_creator: req.user._id
+		});
 
 		contact.save().then((contact) => {
 			res.send(contact);
@@ -41,13 +46,19 @@ let contactCntrl = {
 
 	update: (req, res) => {
 		let id = req.params.id;
-		let body = _.pick(req.body, ['firstName', 'lastName', 'email', 'phone']);
+		let body = {
+			firstName: req.body.firstName,
+			lastName: req.body.lastName,
+			email: req.body.email,
+			phone: req.body.phone,
+			_creator: req.user._id
+		}
 
 		if(!ObjectID.isValid(id)){
 			return res.status(404).send();
 		}
 
-		ContactModel.findByIdAndUpdate(id, {$set: body}, {new: true}).then((contact) => {
+		Contact.findOneAndUpdate({_id: id, _creator: req.user._id}, {$set: body}, {new: true}).then((contact) => {
 			if(!contact){
 				return res.status(400).send();
 			}
@@ -62,7 +73,7 @@ let contactCntrl = {
 		if(!ObjectID.isValid(id)){
 			return res.status(404).send();
 		}
-		ContactModel.findByIdAndRemove(id).then((contact) => {
+		Contact.findOneAndRemove({_id: id, _creator: req.user.id}).then((contact) => {
 			if(!contact){
 				return res.status(400).send();
 			}
@@ -72,6 +83,5 @@ let contactCntrl = {
 		});
 	}
 }
-
 
 module.exports = contactCntrl;

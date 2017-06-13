@@ -1,4 +1,5 @@
 'use strict';
+
 let mongoose = require('mongoose');
 let validator = require('validator');
 const jwt = require('jsonwebtoken');
@@ -128,4 +129,4 @@ UserSchema.pre('save', function(next){
 
 
 let User = mongoose.model('User', UserSchema);
-module.exports = {User};
+module.exports = User;
